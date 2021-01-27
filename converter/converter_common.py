@@ -1,4 +1,6 @@
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 def write_tf_session_graph(sess, model_name='model.pb', output_name='sr_output'):
   graph_def = sess.graph.as_graph_def()

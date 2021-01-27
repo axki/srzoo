@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# ignore downloaded pretrained models-folder
+models/
+
+# ignore SR output folder
+output/
