@@ -12,6 +12,7 @@ tf.disable_v2_behavior()
 
 from utils import image_utils
 
+import metrics as es
 
 # arguments
 parser = argparse.ArgumentParser()
@@ -52,7 +53,7 @@ def main():
         if (filename.lower().endswith(ext)):
           image_name = os.path.splitext(filename)[0]
           sr_path = os.path.join(root, filename)
-          truth_path = os.path.join(args.truth_path, filename)
+          truth_path = os.path.join(args.truth_path, filename[:-6]+'.png')
 
           image_path_list.append([image_name, sr_path, truth_path])
   tf.logging.info('found %d images' % (len(image_path_list)))
@@ -66,6 +67,11 @@ def main():
     # to floating point
     output_image = output_image.astype(np.float64)
     truth_image = truth_image.astype(np.float64)
+    
+    # (self)
+    sr = output_image.reshape((output_image.shape[2], output_image.shape[1], output_image.shape[0])).astype(np.uint8)
+    hr = truth_image.reshape((truth_image.shape[2], truth_image.shape[1], truth_image.shape[0])).astype(np.uint8)
+    print('psnr: ', es.get_metric(hr, sr, 'psnr'), ', ssim: ', es.get_metric(hr, sr, 'ssim'))
 
     # color channels
     if (args.color_mode == 'ycbcry'):

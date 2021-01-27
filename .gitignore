@@ -109,3 +109,9 @@ models/
 
 # ignore SR output folder
 output/
+
+# ignore results
+*.csv
+
+# ignore log
+*.log
